@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Automation Engineer — Real Estate AI Systems</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#03030a;
+  --s1:#0a0a14;
+  --s2:#0f0f1c;
+  --s3:#151525;
+  --s4:#1b1b30;
+  --blue:#2266ff;
+  --blue2:#4d8aff;
+  --blue3:#80aaff;
+  --cyan:#00e5ff;
+  --green:#00ff87;
+  --glow:rgba(34,102,255,.14);
+  --glowc:rgba(0,229,255,.1);
+  --border:rgba(255,255,255,.06);
+  --b2:rgba(255,255,255,.03);
+  --bb:rgba(34,102,255,.22);
+  --white:#ebebf8;
+  --muted:rgba(235,235,248,.48);
+  --muted2:rgba(235,235,248,.22);
+  --fh:'Syne',sans-serif;
+  --fb:'DM Sans',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{background:var(--ink);color:var(--white);font-family:var(--fb);overflow-x:hidden;cursor:none}
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-track{background:var(--ink)}
+::-webkit-scrollbar-thumb{background:var(--blue);border-radius:2px}
+
+/* CURSOR */
+#cur{position:fixed;width:10px;height:10px;background:var(--cyan);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .15s,height .15s,background .2s;box-shadow:0 0 10px var(--cyan);mix-blend-mode:screen}
+#curring{position:fixed;width:34px;height:34px;border:1px solid rgba(34,102,255,.4);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%)}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:500;height:66px;display:flex;align-items:center;justify-content:space-between;padding:0 52px;backdrop-filter:blur(22px);background:rgba(3,3,10,.65);border-bottom:1px solid var(--border)}
+.nlogo{font-family:var(--fh);font-size:16px;font-weight:800;letter-spacing:-.03em;display:flex;align-items:center;gap:9px}
+.ndot{width:7px;height:7px;background:var(--cyan);border-radius:50%;box-shadow:0 0 8px var(--cyan);animation:ndotpulse 2s ease infinite}
+@keyframes ndotpulse{0%,100%{opacity:1;box-shadow:0 0 8px var(--cyan)}50%{opacity:.3;box-shadow:none}}
+.nlinks{display:flex;gap:30px;list-style:none}
+.nlinks a{color:var(--muted);text-decoration:none;font-size:13px;font-weight:500;transition:color .2s}
+.nlinks a:hover{color:var(--white)}
+.ncta{background:linear-gradient(135deg,var(--blue),#1a4fd6);color:#fff;border:none;padding:9px 20px;border-radius:8px;font-family:var(--fb);font-size:13px;font-weight:600;cursor:none;transition:all .25s}
+.ncta:hover{transform:translateY(-1px);box-shadow:0 6px 22px rgba(34,102,255,.45)}
+
+/* HERO */
+#hero{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden;padding-top:66px}
+#canvas3d{position:absolute;inset:0;z-index:0}
+.hero-inner{position:relative;z-index:2;padding:60px 52px;max-width:780px}
+.hbadge{display:inline-flex;align-items:center;gap:8px;background:rgba(0,229,255,.07);border:1px solid rgba(0,229,255,.22);border-radius:100px;padding:6px 16px;font-size:11px;font-weight:700;color:var(--cyan);letter-spacing:.1em;text-transform:uppercase;margin-bottom:28px}
+.hbadge::before{content:'';width:5px;height:5px;background:var(--cyan);border-radius:50%;box-shadow:0 0 6px var(--cyan);animation:ndotpulse 1.6s infinite}
+.hero-h1{font-family:var(--fh);font-size:clamp(40px,6.5vw,84px);font-weight:800;line-height:1.02;letter-spacing:-.04em;margin-bottom:24px}
+.hero-h1 .grad{background:linear-gradient(110deg,var(--blue2),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:17px;color:var(--muted);line-height:1.75;max-width:560px;margin-bottom:40px;font-weight:300}
+.hbtns{display:flex;gap:12px;flex-wrap:wrap}
+.btn-p{background:linear-gradient(135deg,var(--blue),#1a4fd6);color:#fff;border:none;padding:14px 28px;border-radius:10px;font-family:var(--fb);font-size:15px;font-weight:600;cursor:none;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:all .25s}
+.btn-p:hover{transform:translateY(-2px);box-shadow:0 10px 32px rgba(34,102,255,.45)}
+.btn-s{background:transparent;color:var(--white);border:1px solid var(--border);padding:14px 28px;border-radius:10px;font-family:var(--fb);font-size:15px;font-weight:400;cursor:none;text-decoration:none;transition:all .25s}
+.btn-s:hover{border-color:rgba(255,255,255,.18);background:rgba(255,255,255,.04)}
+
+/* LAYOUT */
+section{position:relative;z-index:1}
+.wrap{max-width:1200px;margin:0 auto;padding:0 52px}
+.stag{display:inline-block;font-size:10.5px;font-weight:700;color:var(--cyan);letter-spacing:.13em;text-transform:uppercase;margin-bottom:12px;padding:4px 11px;background:rgba(0,229,255,.06);border-radius:4px;border-left:2px solid var(--cyan)}
+.sh{font-family:var(--fh);font-size:clamp(28px,4.2vw,50px);font-weight:800;line-height:1.07;letter-spacing:-.04em;margin-bottom:14px}
+.sh .grad{background:linear-gradient(110deg,var(--blue2),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.sdesc{font-size:15.5px;color:var(--muted);line-height:1.75;max-width:560px;font-weight:300}
+.divl{height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);max-width:1200px;margin:0 auto;padding:0 52px}
+.divl-inner{height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent)}
+
+/* FADE ANIM */
+.fu{opacity:0;transform:translateY(26px);transition:opacity .65s cubic-bezier(.4,0,.2,1),transform .65s cubic-bezier(.4,0,.2,1)}
+.fu.vis{opacity:1;transform:translateY(0)}
+.fu.d1{transition-delay:.08s}.fu.d2{transition-delay:.16s}.fu.d3{transition-delay:.24s}
+.fu.d4{transition-delay:.32s}.fu.d5{transition-delay:.4s}.fu.d6{transition-delay:.48s}
+.fu.d7{transition-delay:.56s}.fu.d8{transition-delay:.64s}
+
+/* ABOUT */
+#about{padding:120px 0}
+.about-g{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center}
+.acard{background:var(--s2);border:1px solid var(--border);border-radius:20px;padding:34px;position:relative;overflow:hidden}
+.acard::after{content:'';position:absolute;top:-1px;left:20%;right:20%;height:1px;background:linear-gradient(90deg,transparent,var(--cyan),transparent)}
+.skill-pills{display:flex;flex-wrap:wrap;gap:7px;margin-top:18px}
+.sp{background:var(--s3);border:1px solid var(--border);border-radius:6px;padding:4px 11px;font-size:11.5px;color:var(--muted);transition:all .2s;cursor:default}
+.sp:hover,.sp.hl{border-color:var(--bb);color:var(--blue2);background:var(--glow)}
+.astats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}
+.astat{background:var(--s3);border:1px solid var(--b2);border-radius:12px;padding:14px;text-align:center}
+.astat-n{font-family:var(--fh);font-size:26px;font-weight:800;color:var(--cyan);letter-spacing:-.03em}
+.astat-l{font-size:11px;color:var(--muted);margin-top:2px;font-weight:300}
+
+/* CASE STUDIES */
+#cases{padding:120px 0;background:linear-gradient(180deg,transparent,rgba(34,102,255,.02) 50%,transparent)}
+.cs-hdr{text-align:center;margin-bottom:72px}
+.cs-hdr .sdesc{max-width:540px;margin:0 auto}
+
+.cscard{background:var(--s2);border:1px solid var(--border);border-radius:22px;overflow:hidden;margin-bottom:44px;transition:border-color .3s}
+.cscard:hover{border-color:var(--bb)}
+
+.cstop{padding:44px 52px 36px;display:grid;grid-template-columns:1fr auto;gap:36px;align-items:start}
+.csnum{font-size:10.5px;font-weight:700;color:var(--cyan);letter-spacing:.13em;text-transform:uppercase;margin-bottom:8px}
+.cstitle{font-family:var(--fh);font-size:clamp(20px,2.8vw,32px);font-weight:800;letter-spacing:-.04em;margin-bottom:12px;line-height:1.12}
+.csdesc{font-size:14px;color:var(--muted);line-height:1.7;font-weight:300;max-width:600px}
+.csbadge{display:inline-flex;align-items:center;gap:8px;background:var(--s3);border:1px solid var(--border);border-radius:8px;padding:8px 14px;font-size:12.5px;color:var(--muted);white-space:nowrap;flex-shrink:0}
+.csbdot{width:6px;height:6px;border-radius:50%;background:#00ff87;box-shadow:0 0 5px #00ff87;flex-shrink:0}
+
+/* RESULTS STRIP */
+.csstrip{display:grid;grid-template-columns:repeat(4,1fr);background:var(--s3);border-top:1px solid var(--border)}
+.csr{padding:26px 22px;text-align:center;border-right:1px solid var(--border);position:relative;overflow:hidden}
+.csr:last-child{border-right:none}
+.csr::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--blue2),transparent);opacity:0;transition:opacity .4s}
+.cscard:hover .csr::before{opacity:1}
+.csrnum{font-family:var(--fh);font-size:32px;font-weight:800;letter-spacing:-.04em;color:var(--cyan);margin-bottom:4px}
+.csrlabel{font-size:11.5px;color:var(--muted);line-height:1.45}
+
+/* TABS */
+.csbody{padding:0 52px}
+.cstabs{display:flex;border-bottom:1px solid var(--border)}
+.cstab{padding:13px 22px;font-size:12.5px;font-weight:600;color:var(--muted);cursor:none;border:none;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .2s;background:none;font-family:var(--fb);letter-spacing:.01em}
+.cstab.active{color:var(--white);border-bottom-color:var(--blue)}
+.cstab:hover:not(.active){color:var(--white)}
+.cspanels{padding:36px 0 46px}
+.cspanel{display:none}
+.cspanel.active{display:block}
+
+/* PROBLEM GRID */
+.probgrid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.probcard{background:var(--s3);border:1px solid var(--border);border-radius:14px;padding:26px}
+.pico{font-size:24px;margin-bottom:12px}
+.ptitle{font-family:var(--fh);font-size:15px;font-weight:700;letter-spacing:-.02em;margin-bottom:7px}
+.ptext{font-size:13.5px;color:var(--muted);line-height:1.68;font-weight:300}
+.pmetric{display:flex;align-items:center;gap:8px;margin-top:10px;padding-top:10px;border-top:1px solid var(--border)}
+.pmv{font-family:var(--fh);font-size:17px;font-weight:800;color:#f87171}
+.pml{font-size:12px;color:var(--muted);font-weight:300}
+
+/* SOLUTION STEPS */
+.solsteps{display:flex;flex-direction:column}
+.solstep{display:grid;grid-template-columns:46px 1fr;gap:18px;padding:22px 0;border-bottom:1px solid var(--border);position:relative}
+.solstep:last-child{border-bottom:none}
+.solstep::before{content:'';position:absolute;left:23px;top:58px;bottom:-22px;width:1px;background:linear-gradient(180deg,var(--bb),transparent)}
+.solstep:last-child::before{display:none}
+.ssn{width:46px;height:46px;border-radius:11px;background:var(--glow);border:1px solid var(--bb);display:flex;align-items:center;justify-content:center;font-family:var(--fh);font-size:15px;font-weight:800;color:var(--blue2);flex-shrink:0}
+.sstitle{font-family:var(--fh);font-size:15px;font-weight:700;letter-spacing:-.02em;margin-bottom:5px}
+.ssdesc{font-size:13.5px;color:var(--muted);line-height:1.7;font-weight:300}
+.stech{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
+.stch{background:var(--s4);border:1px solid var(--border);border-radius:4px;padding:3px 8px;font-size:10.5px;color:var(--muted2);font-weight:500}
+
+/* FLOW DIAGRAM */
+.flownodes{display:flex;align-items:center;justify-content:center;flex-wrap:nowrap;gap:0;overflow-x:auto;padding:4px 0 16px}
+.fnode{background:var(--s3);border:1px solid var(--border);border-radius:13px;padding:16px 14px;text-align:center;min-width:96px;flex-shrink:0;transition:all .3s;cursor:default}
+.fnode:hover{border-color:var(--bb);transform:translateY(-4px);box-shadow:0 10px 28px rgba(34,102,255,.14)}
+.fnode.hl{border-color:var(--blue);background:var(--glow)}
+.fni{font-size:22px;margin-bottom:5px}
+.fnl{font-family:var(--fh);font-size:10.5px;font-weight:700;margin-bottom:1px}
+.fns{font-size:9.5px;color:var(--muted);font-weight:300}
+.farr{width:36px;flex-shrink:0;position:relative;display:flex;align-items:center}
+.farrline{width:100%;height:1px;background:linear-gradient(90deg,var(--bb),rgba(34,102,255,.08))}
+.fpkt{position:absolute;width:5px;height:5px;background:var(--cyan);border-radius:50%;box-shadow:0 0 6px var(--cyan);animation:pktanim 2s linear infinite}
+@keyframes pktanim{0%{left:0;opacity:0}10%{opacity:1}90%{opacity:1}100%{left:100%;opacity:0}}
+.flowinfo{margin-top:26px;background:var(--s3);border:1px solid var(--border);border-radius:12px;padding:22px;display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.fi-item{}
+.fi-label{font-size:10px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:5px}
+.fi-val{font-family:var(--fh);font-size:20px;font-weight:800;color:var(--cyan)}
+.fi-sub{font-size:11.5px;color:var(--muted);font-weight:300;margin-top:2px}
+
+/* RESULTS DETAIL */
+.resgrid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.rescard{background:var(--s3);border:1px solid var(--border);border-radius:14px;padding:26px;position:relative;overflow:hidden}
+.rescard::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--cyan),transparent)}
+.resnum{font-family:var(--fh);font-size:40px;font-weight:800;letter-spacing:-.04em;color:var(--cyan);margin-bottom:5px;line-height:1}
+.resnum .u{font-size:20px}
+.restitle{font-size:14px;font-weight:600;margin-bottom:7px}
+.resdesc{font-size:13px;color:var(--muted);line-height:1.65;font-weight:300}
+.barow{display:flex;gap:10px;margin-top:12px;padding-top:12px;border-top:1px solid var(--border)}
+.bai{flex:1;text-align:center;padding:9px;border-radius:7px}
+.bai.bef{background:rgba(248,113,113,.06);border:1px solid rgba(248,113,113,.15)}
+.bai.aft{background:rgba(0,255,135,.06);border:1px solid rgba(0,255,135,.15)}
+.baval{font-family:var(--fh);font-size:14px;font-weight:800;margin-bottom:2px}
+.bef .baval{color:#f87171}.aft .baval{color:#00ff87}
+.balabel{font-size:9.5px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+
+/* SERVICES */
+#services{padding:120px 0}
+.svcgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:56px}
+.svcc{background:var(--s2);border:1px solid var(--border);border-radius:16px;padding:28px 22px;transition:all .3s;cursor:default;position:relative;overflow:hidden}
+.svcc::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at var(--mx,50%) var(--my,50%),var(--glow),transparent 60%);opacity:0;transition:opacity .4s}
+.svcc:hover{border-color:var(--bb);transform:translateY(-4px);box-shadow:0 14px 40px rgba(34,102,255,.1)}
+.svcc:hover::before{opacity:1}
+.svico{font-size:26px;margin-bottom:14px}
+.svname{font-family:var(--fh);font-size:14.5px;font-weight:700;letter-spacing:-.02em;margin-bottom:7px}
+.svdesc{font-size:12.5px;color:var(--muted);line-height:1.65;font-weight:300}
+
+/* TECH */
+#stack{padding:90px 0}
+.techgrid{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;max-width:820px;margin:0 auto}
+.titem{background:var(--s2);border:1px solid var(--border);border-radius:13px;padding:18px 10px;text-align:center;transition:all .3s;cursor:default}
+.titem:hover{border-color:var(--bb);transform:translateY(-3px);box-shadow:0 8px 22px rgba(34,102,255,.1)}
+.tlogo{font-size:24px;margin-bottom:6px;display:block}
+.tname{font-size:10px;color:var(--muted);font-weight:500;letter-spacing:.03em}
+
+/* IMPACT */
+#impact{padding:90px 0}
+.impgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.impc{background:var(--s2);border:1px solid var(--border);border-radius:20px;padding:36px 24px;text-align:center;position:relative;overflow:hidden;transition:all .3s}
+.impc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--blue),transparent)}
+.impc:hover{transform:translateY(-4px);border-color:var(--bb)}
+.impn{font-family:var(--fh);font-size:52px;font-weight:800;letter-spacing:-.05em;color:var(--cyan);line-height:1;margin-bottom:7px}
+.impl{font-size:14px;font-weight:600;margin-bottom:5px}
+.impd{font-size:12px;color:var(--muted);font-weight:300;line-height:1.5}
+
+/* TESTIMONIALS */
+#testimonials{padding:120px 0}
+.tgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:64px}
+.tcard{background:var(--s2);border:1px solid var(--border);border-radius:20px;padding:30px;transition:all .3s}
+.tcard:hover{border-color:var(--bb);transform:translateY(-4px)}
+.tstars{color:#fbbf24;font-size:12px;margin-bottom:12px}
+.tq{font-family:Georgia,serif;font-size:48px;color:rgba(34,102,255,.18);line-height:.7;margin-bottom:10px;display:block}
+.ttext{font-size:14px;color:rgba(235,235,248,.7);line-height:1.75;font-style:italic;margin-bottom:22px;font-weight:300}
+.tauthor{display:flex;align-items:center;gap:11px}
+.tavatar{width:40px;height:40px;border-radius:50%;background:var(--glow);border:1px solid var(--bb);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.tname{font-size:13px;font-weight:700;margin-bottom:1px}
+.trole{font-size:11.5px;color:var(--muted);font-weight:300}
+
+/* CONTACT */
+#contact{padding:120px 0}
+.contgrid{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:start}
+.cform{background:var(--s2);border:1px solid var(--border);border-radius:24px;padding:40px;position:relative;overflow:hidden}
+.cform::after{content:'';position:absolute;top:-1px;left:18%;right:18%;height:1px;background:linear-gradient(90deg,transparent,var(--cyan),transparent)}
+.cftitle{font-family:var(--fh);font-size:20px;font-weight:800;letter-spacing:-.03em;margin-bottom:5px}
+.cfsub{font-size:13.5px;color:var(--muted);margin-bottom:28px;font-weight:300}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.fg{margin-bottom:14px}
+label{display:block;font-size:10.5px;font-weight:700;color:var(--muted);letter-spacing:.07em;text-transform:uppercase;margin-bottom:6px}
+input,select,textarea{width:100%;background:var(--s3);border:1px solid var(--border);border-radius:9px;padding:11px 13px;font-family:var(--fb);font-size:13.5px;color:var(--white);outline:none;transition:all .2s;-webkit-appearance:none}
+input:focus,select:focus,textarea:focus{border-color:var(--bb);background:var(--s2);box-shadow:0 0 0 3px rgba(34,102,255,.08)}
+textarea{resize:vertical;min-height:84px}
+select option{background:var(--s2)}
+.bform{width:100%;background:linear-gradient(135deg,var(--blue),#1a4fd6);color:#fff;border:none;padding:13px;border-radius:9px;font-family:var(--fb);font-size:14px;font-weight:600;cursor:none;transition:all .25s;margin-bottom:10px}
+.bform:hover{box-shadow:0 8px 26px rgba(34,102,255,.4)}
+.bcal{width:100%;background:transparent;color:var(--white);border:1px solid var(--border);padding:12px;border-radius:9px;font-family:var(--fb);font-size:13.5px;font-weight:400;cursor:none;transition:all .25s;display:flex;align-items:center;justify-content:center;gap:7px}
+.bcal:hover{border-color:var(--bb);background:var(--glow)}
+.cpts{margin-top:28px;display:flex;flex-direction:column;gap:16px}
+.cpt{display:flex;align-items:flex-start;gap:12px}
+.cpico{width:36px;height:36px;background:var(--glow);border:1px solid var(--bb);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;margin-top:1px}
+.cptitle{font-size:13.5px;font-weight:700;margin-bottom:2px}
+.cptext{font-size:12.5px;color:var(--muted);font-weight:300;line-height:1.6}
+
+/* FOOTER */
+footer{border-top:1px solid var(--border);padding:34px 0;position:relative;z-index:1}
+.footer-inner{display:flex;align-items:center;justify-content:space-between}
+.fcopy{font-size:12.5px;color:var(--muted);font-weight:300}
+.flinks{display:flex;gap:24px}
+.flinks a{font-size:12.5px;color:var(--muted);text-decoration:none;transition:color .2s;cursor:none}
+.flinks a:hover{color:var(--white)}
+
+@media(max-width:1024px){
+  .about-g,.contgrid{grid-template-columns:1fr;gap:44px}
+  .cstop{grid-template-columns:1fr;gap:16px}
+  .csstrip,.csstrip{grid-template-columns:repeat(2,1fr)}
+  .svcgrid{grid-template-columns:repeat(2,1fr)}
+  .impgrid{grid-template-columns:repeat(2,1fr)}
+  .tgrid{grid-template-columns:1fr}
+  .techgrid{grid-template-columns:repeat(4,1fr)}
+  .probgrid,.resgrid{grid-template-columns:1fr}
+}
+@media(max-width:768px){
+  .wrap,.divl{padding:0 22px}
+  nav{padding:0 22px}
+  .nlinks{display:none}
+  .hero-inner{padding:40px 22px}
+  .svcgrid{grid-template-columns:1fr}
+  .techgrid{grid-template-columns:repeat(3,1fr)}
+  .frow{grid-template-columns:1fr}
+  .cstabs{overflow-x:auto}
+  .cstop,.csbody{padding-left:22px;padding-right:22px}
+  .flowinfo{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div id="cur"></div>
+<div id="curring"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+<nav>
+  <div class="nlogo"><span class="ndot"></span>AI Systems</div>
+  <ul class="nlinks">
+    <li><a href="#about">About</a></li>
+    <li><a href="#cases">Case Studies</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#stack">Stack</a></li>
+    <li><a href="#impact">Results</a></li>
+  </ul>
+  <button class="ncta" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Book Consultation</button>
+</nav>
+
+<section id="hero">
+  <canvas id="canvas3d"></canvas>
+  <div class="hero-inner">
+    <div class="hbadge">AI Automation Engineer · Real Estate</div>
+    <h1 class="hero-h1">AI Automation Systems<br>for <span class="grad">Real Estate</span><br>Businesses</h1>
+    <p class="hero-sub">I build intelligent AI workflows, CRM systems, WhatsApp lead capture bots, RAG AI assistants, and voice agents that automate operations, increase lead conversion, and save hours of manual work.</p>
+    <div class="hbtns">
+      <a href="#cases" class="btn-p">View Case Studies <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M2.5 7.5h10M8.5 3.5l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a href="#contact" class="btn-s">Book Consultation</a>
+    </div>
+  </div>
+</section>
+
+<div class="divl"><div class="divl-inner"></div></div>
+
+<!-- ABOUT -->
+<section id="about"><div class="wrap">
+  <div class="about-g">
+    <div class="fu">
+      <div class="stag">About Me</div>
+      <h2 class="sh">The <span class="grad">AI layer</span> your real estate business is missing</h2>
+      <p class="sdesc">I'm an AI Automation Engineer and Real Estate AI Systems Builder specialising in end-to-end intelligent workflows. From the moment a lead enters your funnel to the moment a deal is closed — I architect systems that run without you.</p>
+      <p class="sdesc" style="margin-top:14px">My work combines automation engineering, AI product development, and CRM architecture — purpose-built for agencies, realtors, and property consultants ready to scale without scaling headcount.</p>
+      <div class="astats">
+        <div class="astat"><div class="astat-n">50+</div><div class="astat-l">Automations Built</div></div>
+        <div class="astat"><div class="astat-n">80%</div><div class="astat-l">Manual Work Removed</div></div>
+        <div class="astat"><div class="astat-n">24/7</div><div class="astat-l">AI Systems Active</div></div>
+        <div class="astat"><div class="astat-n">5×</div><div class="astat-l">Faster Lead Response</div></div>
+      </div>
+    </div>
+    <div class="fu d2">
+      <div class="acard">
+        <div class="stag" style="margin-bottom:12px">Core Expertise</div>
+        <div class="skill-pills">
+          <span class="sp hl">n8n Workflows</span><span class="sp hl">AI Agents</span><span class="sp hl">RAG Systems</span><span class="sp hl">OpenAI APIs</span><span class="sp">WhatsApp Automation</span><span class="sp">Voice AI</span><span class="sp">CRM Integrations</span><span class="sp hl">API Integrations</span><span class="sp">Airtable</span><span class="sp">Supabase</span><span class="sp">LangChain</span><span class="sp">Pinecone</span><span class="sp">ElevenLabs</span><span class="sp">Twilio</span><span class="sp">Make.com</span><span class="sp">Google Sheets</span>
+        </div>
+        <div style="margin-top:22px;padding-top:18px;border-top:1px solid var(--border)">
+          <div class="stag" style="margin-bottom:10px">Industries Served</div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <div style="display:flex;align-items:center;gap:9px"><div style="width:5px;height:5px;border-radius:50%;background:var(--cyan);box-shadow:0 0 5px var(--cyan)"></div><span style="font-size:13px">Real Estate Agencies &amp; Brokerages</span></div>
+            <div style="display:flex;align-items:center;gap:9px"><div style="width:5px;height:5px;border-radius:50%;background:var(--green);box-shadow:0 0 5px var(--green)"></div><span style="font-size:13px">Property Management Companies</span></div>
+            <div style="display:flex;align-items:center;gap:9px"><div style="width:5px;height:5px;border-radius:50%;background:#fbbf24;box-shadow:0 0 5px #fbbf24"></div><span style="font-size:13px">Independent Realtors &amp; Consultants</span></div>
+            <div style="display:flex;align-items:center;gap:9px"><div style="width:5px;height:5px;border-radius:50%;background:var(--blue2);box-shadow:0 0 5px var(--blue2)"></div><span style="font-size:13px">Startup Founders &amp; Business Owners</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div></section>
+
+<div class="divl"><div class="divl-inner"></div></div>
+
+<!-- CASE STUDIES -->
+<section id="cases"><div class="wrap">
+  <div class="cs-hdr fu">
+    <div class="stag">Detailed Case Studies</div>
+    <h2 class="sh">Real problems. <span class="grad">Real AI solutions.</span> Real numbers.</h2>
+    <p class="sdesc">Four complete case studies — the exact problem, what I built, how it works step by step, and the measurable results achieved with real before/after numbers.</p>
+  </div>
+
+  <!-- ═══ CS 1 ═══ -->
+  <div class="cscard fu d1">
+    <div class="cstop">
+      <div>
+        <div class="csnum">Case Study 01</div>
+        <h3 class="cstitle">AI Real Estate CRM<br>Automation System</h3>
+        <p class="csdesc">A mid-size Dubai brokerage was drowning in manual lead management. Agents were losing deals to slow follow-ups and chaotic spreadsheets. We replaced it all with an intelligent, fully automated CRM pipeline.</p>
+      </div>
+      <div class="csbadge"><span class="csbdot"></span>Prime Realty Group, Dubai</div>
+    </div>
+    <div class="csstrip">
+      <div class="csr"><div class="csrnum">80%</div><div class="csrlabel">Reduction in manual admin work</div></div>
+      <div class="csr"><div class="csrnum">312%</div><div class="csrlabel">Faster lead follow-up speed</div></div>
+      <div class="csr"><div class="csrnum">41%</div><div class="csrlabel">Higher deal conversion rate</div></div>
+      <div class="csr"><div class="csrnum">$180k</div><div class="csrlabel">Additional revenue in 90 days</div></div>
+    </div>
+    <div class="csbody">
+      <div class="cstabs" id="tabs1">
+        <button class="cstab active" data-p="p1a">🔴 The Problem</button>
+        <button class="cstab" data-p="p1b">🔵 The Solution</button>
+        <button class="cstab" data-p="p1c">⚡ How It Works</button>
+        <button class="cstab" data-p="p1d">📈 Results</button>
+      </div>
+      <div class="cspanels">
+        <div class="cspanel active" id="p1a">
+          <div class="probgrid">
+            <div class="probcard"><div class="pico">😤</div><div class="ptitle">Leads Falling Through the Cracks</div><div class="ptext">The brokerage received 200+ leads monthly from WhatsApp, Instagram, web forms, and referrals. Agents manually copy-pasted info into spreadsheets — resulting in duplicate entries, missed follow-ups, and lost deals every week.</div><div class="pmetric"><div class="pmv">67%</div><div class="pml">of leads never got a follow-up within 24 hours</div></div></div>
+            <div class="probcard"><div class="pico">⏰</div><div class="ptitle">Agent Time Wasted on Admin</div><div class="ptext">Every agent spent 3–4 hours per day on pure admin: updating spreadsheets, sending manual follow-up messages, scheduling viewings, and chasing paperwork. High-value selling time consumed by low-value tasks.</div><div class="pmetric"><div class="pmv">4 hrs/day</div><div class="pml">per agent lost to manual data entry</div></div></div>
+            <div class="probcard"><div class="pico">📊</div><div class="ptitle">Zero Pipeline Visibility</div><div class="ptext">Management had no real-time view of where leads sat in the pipeline. Deals stalled for weeks unnoticed. No scoring system, no prioritisation, no automated nudges to keep deals moving.</div><div class="pmetric"><div class="pmv">0</div><div class="pml">real-time pipeline metrics available</div></div></div>
+            <div class="probcard"><div class="pico">💸</div><div class="ptitle">Slow Response = Lost Revenue</div><div class="ptext">78% of buyers choose the first agent who responds. The brokerage's average response time was 6–8 hours. Competitors with faster response were winning deals that should have been theirs.</div><div class="pmetric"><div class="pmv">6–8 hrs</div><div class="pml">average response time to new inbound leads</div></div></div>
+          </div>
+        </div>
+        <div class="cspanel" id="p1b">
+          <div class="solsteps">
+            <div class="solstep"><div class="ssn">01</div><div><div class="sstitle">Unified Lead Intake Hub</div><div class="ssdesc">Built n8n webhooks to capture leads from every channel — WhatsApp, web forms, Instagram Lead Ads, property portals, and referral emails — into one normalised data pipeline. All leads arrive in one place, deduplicated and timestamped automatically, regardless of source.</div><div class="stech"><span class="stch">n8n</span><span class="stch">WhatsApp API</span><span class="stch">Meta Ads API</span><span class="stch">Webhooks</span></div></div></div>
+            <div class="solstep"><div class="ssn">02</div><div><div class="sstitle">AI Lead Scoring Engine</div><div class="ssdesc">Each lead is processed by a GPT-4 powered scoring model analysing intent signals — property type interest, budget range, urgency keywords, response time, engagement level — and assigns a score from 0–100. Hot leads (80+) are immediately escalated to senior agents via WhatsApp notification.</div><div class="stech"><span class="stch">OpenAI GPT-4</span><span class="stch">n8n</span><span class="stch">Custom Scoring Logic</span></div></div></div>
+            <div class="solstep"><div class="ssn">03</div><div><div class="sstitle">Automated CRM Population &amp; Pipeline</div><div class="ssdesc">All qualified lead data is automatically written into Airtable CRM with structured fields: lead source, score, property preferences, budget, assigned agent, pipeline stage. A live Airtable dashboard gave management full real-time visibility for the first time.</div><div class="stech"><span class="stch">Airtable</span><span class="stch">n8n</span><span class="stch">Google Sheets Mirror</span></div></div></div>
+            <div class="solstep"><div class="ssn">04</div><div><div class="sstitle">Intelligent Follow-Up Sequences</div><div class="ssdesc">Based on lead score and pipeline stage, automated personalised WhatsApp sequences trigger — using the lead's name, property preferences, and relevant listings. If a lead goes cold for 48 hours, a re-engagement sequence fires automatically. No manual chasing required.</div><div class="stech"><span class="stch">WhatsApp Business API</span><span class="stch">n8n</span><span class="stch">OpenAI</span></div></div></div>
+            <div class="solstep"><div class="ssn">05</div><div><div class="sstitle">Appointment Booking Automation</div><div class="ssdesc">When a lead indicates viewing interest, an automated flow sends a Calendly link via WhatsApp, syncs confirmed appointments to the agent's Google Calendar, and sends confirmations and 24-hour reminders to both parties. Zero manual coordination from anyone.</div><div class="stech"><span class="stch">Calendly API</span><span class="stch">Google Calendar</span><span class="stch">n8n</span><span class="stch">WhatsApp</span></div></div></div>
+          </div>
+        </div>
+        <div class="cspanel" id="p1c">
+          <p style="font-size:13.5px;color:var(--muted);margin-bottom:20px;font-weight:300">Data travels through 7 automated nodes — from first contact to deal pipeline entry. Each arrow is a real-time automated action.</p>
+          <div class="flownodes">
+            <div class="fnode hl"><div class="fni">📱</div><div class="fnl">Lead Arrives</div><div class="fns">Multi-channel</div></div>
+            <div class="farr"><div class="farrline"></div><div class="fpkt" style="animation-delay:0s"></div></div>
+            <div class="fnode"><div class="fni">🔀</div><div class="fnl">n8n Router</div><div class="fns">Dedup &amp; sort</div></div>
+            <div class="farr"><div class="farrline"></div><div class="fpkt" style="animation-delay:.3s"></div></div>
+            <div class="fnode"><div class="fni">🤖</div><div class="fnl">AI Score</div><div class="fns">0–100 rank</div></div>
+            <div class="farr"><div class="farrline"></div><div class="fpkt" style="animation-delay:.6s"></div></div>
+            <div class="fnode"><div class="fni">🗄️</div><div class="fnl">CRM Write</div><div class="fns">Airtable</div></div>
+            <div class="farr"><div class="farrline"></div><div class="fpkt" style="animation-delay:.9s"></div></div>
+            <div class="fnode"><div class="fni">💬</div><div class="fnl">WA Follow-up</div><div class="fns">Personalised</div></div>
+            <div class="farr"><div class="farrline"></div><div class="fpkt" style="animation-delay:1.2s"></div></div>
+            <div class="fnode"><div class="fni">📅</div><div class="fnl">Book Viewing</div><div class="fns">Auto-schedule</div></div>
+            <div class="farr"><div class="farrline"></div><div class="fpkt" style="animation-delay:1.5s"></div></div>
+            <div class="fnode hl"><div class="fni">🤝</div><div class="fnl">Deal Close</div><div class="fns">Pipeline win</div></div>
+          </div>
+          <div class="flowinfo">
+            <div class="fi-item"><div class="fi-label">Trigger Speed</div><div class="fi-val">&lt;30 sec</div><div class="fi-sub">Lead to first automated contact</div></div>
+            <div class="fi-item"><div class="fi-label">Availability</div><div class="fi-val">365 days</div><div class="fi-sub">No holidays, no sick days, no lag</div></div>
+            <div class="fi-item"><div class="fi-label">Agent Required</div><div class="fi-val">Zero</div><div class="fi-sub">Fully autonomous until viewing</div></div>
+          </div>
+        </div>
+        <div class="cspanel" id="p1d">
+          <div class="resgrid">
+            <div class="rescard"><div class="resnum"><span class="cnt" data-t="80">0</span><span class="u">%</span></div><div class="restitle">Reduction in Manual Admin Work</div><div class="resdesc">Agents reclaimed 3–4 hours per day. Time previously spent on spreadsheet data entry and manual WhatsApp follow-ups is now fully automated by the system.</div><div class="barow"><div class="bai bef"><div class="baval">4 hrs/day</div><div class="balabel">Before</div></div><div class="bai aft"><div class="baval">45 min/day</div><div class="balabel">After</div></div></div></div>
+            <div class="rescard"><div class="resnum"><span class="cnt" data-t="312">0</span><span class="u">%</span></div><div class="restitle">Faster Lead Response Time</div><div class="resdesc">The system contacts every new lead within 30 seconds of arriving — day or night. Previously agents were responding 6–8 hours later, after leads had gone cold.</div><div class="barow"><div class="bai bef"><div class="baval">6–8 hours</div><div class="balabel">Before</div></div><div class="bai aft"><div class="baval">&lt;30 seconds</div><div class="balabel">After</div></div></div></div>
+            <div class="rescard"><div class="resnum"><span class="cnt" data-t="41">0</span><span class="u">%</span></div><div class="restitle">Higher Deal Conversion Rate</div><div class="resdesc">AI scoring prioritising hot leads plus automated nurture sequences pushed deal conversion from 8% to 11.3% within 90 days of deployment.</div><div class="barow"><div class="bai bef"><div class="baval">8% CVR</div><div class="balabel">Before</div></div><div class="bai aft"><div class="baval">11.3% CVR</div><div class="balabel">After</div></div></div></div>
+            <div class="rescard"><div class="resnum">$<span class="cnt" data-t="180">0</span><span class="u">k</span></div><div class="restitle">Additional Revenue in 90 Days</div><div class="resdesc">By capturing previously lost leads and converting them faster, the brokerage closed 6 additional deals in 90 days — averaging $30k commission per deal.</div><div class="barow"><div class="bai bef"><div class="baval">$0 extra</div><div class="balabel">Before</div></div><div class="bai aft"><div class="baval">$180k added</div><div class="balabel">After (90 days)</div></div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ CS 2 ═══ -->
+  <div class="cscard fu d2">
+    <div class="cstop">
+      <div>
+        <div class="csnum">Case Study 02</div>
+        <h3 class="cstitle">AI WhatsApp Lead<br>Capture Agent</h3>
+        <p class="csdesc">A Riyadh property consultancy was spending $8k/month on ads but converting only 4% of leads. The problem wasn't the ads — it was a slow, manual qualification process losing hot prospects within hours of first contact.</p>
+      </div>
+      <div class="csbadge"><span class="csbdot"></span>Horizon Properties, Riyadh</div>
+    </div>
+    <div class="csstrip">
+      <div class="csr"><div class="csrnum">4×</div><div class="csrlabel">More leads qualified per day</div></div>
+      <div class="csr"><div class="csrnum">91%</div><div class="csrlabel">CRM data completeness rate</div></div>
+      <div class="csr"><div class="csrnum">60%</div><div class="csrlabel">Drop in cost per qualified lead</div></div>
+      <div class="csr"><div class="csrnum">24/7</div><div class="csrlabel">Lead capture — zero staff needed</div></div>
+    </div>
+    <div class="csbody">
+      <div class="cstabs" id="tabs2">
+        <button class="cstab active" data-p="p2a">🔴 The Problem</button>
+        <button class="cstab" data-p="p2b">🔵 The Solution</button>
+        <button class="cstab" data-p="p2c">⚡ How It Works</button>
+        <button class="cstab" data-p="p2d">📈 Results</button>
+      </div>
+      <div class="cspanels">
+        <div class="cspanel active" id="p2a">
+          <div class="probgrid">
+            <div class="probcard"><div class="pico">📉</div><div class="ptitle">4% Conversion on $8k/Month Ad Spend</div><div class="ptext">The consultancy was spending $8,000/month on Meta and Google ads driving WhatsApp inquiries. Only 4% ever became paying clients — mostly because the qualification process took days and leads moved on to competitors.</div><div class="pmetric"><div class="pmv">4%</div><div class="pml">conversion rate on $8k/month ad spend</div></div></div>
+            <div class="probcard"><div class="pico">🕐</div><div class="ptitle">Manual Qualification Bottleneck</div><div class="ptext">Sales agents individually messaged every lead to ask the same 8 qualification questions: budget, location, property type, timeline, financing status. This consumed 2–3 hours per day per agent and created a growing backlog during peak hours.</div><div class="pmetric"><div class="pmv">2–3 hrs</div><div class="pml">per agent daily just to qualify leads</div></div></div>
+            <div class="probcard"><div class="pico">🌙</div><div class="ptitle">Leads Lost After Business Hours</div><div class="ptext">A significant percentage of ad clicks and WhatsApp messages came after 6pm and on weekends when no agents were online. These leads received zero response for 12–16 hours — by which time they had engaged a competitor.</div><div class="pmetric"><div class="pmv">38%</div><div class="pml">of leads arrived outside business hours</div></div></div>
+            <div class="probcard"><div class="pico">🗃️</div><div class="ptitle">Incomplete and Inconsistent CRM Data</div><div class="ptext">When agents did qualify leads manually, the CRM data was inconsistent — different field formats, vague budget ranges, missing qualification fields. 52% of records had incomplete data, making targeting and follow-up unreliable.</div><div class="pmetric"><div class="pmv">52%</div><div class="pml">of CRM records had incomplete data</div></div></div>
+          </div>
+        </div>
+        <div class="cspanel" id="p2b">
+          <div class="solsteps">
+            <div class="solstep"><div class="ssn">01</div><div><div class="sstitle">Intelligent WhatsApp Conversation Bot</div><div class="ssdesc">Built a GPT-4 powered WhatsApp chatbot using the WhatsApp Business API that instantly responds to every new message — day or night. The bot introduces itself, engages the lead naturally, and begins a structured qualification conversation that feels human, not robotic. Average response time: 3 seconds.</div><div class="stech"><span class="stch">WhatsApp Business API</span><span class="stch">OpenAI GPT-4</span><span class="stch">n8n</span></div></div></div>
+            <div class="solstep"><div class="ssn">02</div><div><div class="sstitle">Adaptive 8-Question Qualification Flow</div><div class="ssdesc">The bot runs through an adaptive qualification flow collecting: budget range, preferred location, property type (villa/apartment/commercial), purchase timeline, financing status, and contact preferences. Questions adapt based on prior answers so the conversation feels natural rather than a rigid form — completion rate 84%.</div><div class="stech"><span class="stch">OpenAI</span><span class="stch">Conditional Logic</span><span class="stch">n8n Flow</span></div></div></div>
+            <div class="solstep"><div class="ssn">03</div><div><div class="sstitle">Property Recommendation Engine</div><div class="ssdesc">Based on qualified preferences, the bot instantly pulls matching listings from the property database and sends 2–3 curated property cards with images, price, location, and direct inquiry link. This keeps the lead engaged and accelerates movement down the funnel while keeping agents out of the loop entirely.</div><div class="stech"><span class="stch">Airtable Property DB</span><span class="stch">OpenAI</span><span class="stch">WhatsApp Media API</span></div></div></div>
+            <div class="solstep"><div class="ssn">04</div><div><div class="sstitle">Automatic CRM Sync with Agent Alert</div><div class="ssdesc">Once qualification is complete, all structured data is automatically written to Airtable CRM with consistent field values, standardised budget ranges, AI-generated lead summary, and a quality score. Agents receive a WhatsApp notification with the full lead profile before they even open the CRM.</div><div class="stech"><span class="stch">Airtable</span><span class="stch">n8n</span><span class="stch">WhatsApp Notifications</span></div></div></div>
+          </div>
+        </div>
+        <div class="cspanel" id="p2c">
+          <p style="font-size:13.5px;color:var(--muted);margin-bottom:20px;font-weight:300">From WhatsApp message to fully qualified CRM record — under 8 minutes, fully automated, 24/7.</p>
+          <div class="flownodes">
+            <div class="fnode hl"><div class="fni">📲</div><div class="fnl">WA Message</div><div class="fns">New lead</div></div>
+            <div class="farr"><div class="farrline"></div><div class="fpkt"></div></div>
+            <div class="fnode"><div class="fni">🤖</div><div class="fnl">Bot Engages</div><div class="fns">3 sec reply</div></div>
+            <div class="farr"><div class="farrline"></div><div class="fpkt" style="animation-delay:.35s"></div></div>
+            <div class="fnode"><div class="fni">❓</div><div class="fnl">8 Questions</div><div class="fns">Adaptive</div></div>
+            <div class="farr"><div class="farrline"></div><div class="fpkt" style="animation-delay:.7s"></div></div>
+            <div class="fnode"><div class="fni">🏡</div><div class="fnl">Property Recs</div><div class="fns">Matched</div></div>
+            <div class="farr"><div class="farrline"></div><div class="fpkt" style="animation-delay:1.05s"></div></div>
+            <div class="fnode"><div class="fni">💾</div><div class="fnl">CRM Write</div><div class="fns">Perfect data</div></div>
+            <div class="farr"><div class="farrline"></div><div class="fpkt" style="animation-delay:1.4s"></div></div>
+            <div class="fnode hl"><div class="fni">🔔</div><div class="fnl">Agent Alert</div><div class="fns">Hot notify</div></div>
+          </div>
+          <div class="flowinfo">
+            <div class="fi-item"><div class="fi-label">Qualification Time</div><div class="fi-val">&lt;8 min</div><div class="fi-sub">Full profile without any agent</div></div>
+            <div class="fi-item"><div class="fi-label">Simultaneous Chats</div><div class="fi-val">Unlimited</div><div class="fi-sub">Bot handles any volume at once</div></div>
+            <div class="fi-item"><div class="fi-label">Completion Rate</div><div class="fi-val">84%</div><div class="fi-sub">Of leads who start, finish the flow</div></div>
+          </div>
+        </div>
+        <div class="cspanel" id="p2d">
+          <div class="resgrid">
+            <div class="rescard"><div class="resnum"><span class="cnt" data-t="4">0</span><span class="u">×</span></div><div class="restitle">More Leads Qualified Daily</div><div class="resdesc">The bot handles unlimited simultaneous conversations. Previous capacity was ~25 leads/day per agent. Now 100+ leads are fully qualified every day without any agent involvement.</div><div class="barow"><div class="bai bef"><div class="baval">~25/day</div><div class="balabel">Before</div></div><div class="bai aft"><div class="baval">100+/day</div><div class="balabel">After</div></div></div></div>
+            <div class="rescard"><div class="resnum"><span class="cnt" data-t="60">0</span><span class="u">%</span></div><div class="restitle">Drop in Cost Per Qualified Lead</div><div class="resdesc">Same ad spend, 4× qualification volume. Cost per qualified lead dropped from $320 to $128 — making the entire paid acquisition strategy dramatically more efficient.</div><div class="barow"><div class="bai bef"><div class="baval">$320 CPL</div><div class="balabel">Before</div></div><div class="bai aft"><div class="baval">$128 CPL</div><div class="balabel">After</div></div></div></div>
+            <div class="rescard"><div class="resnum"><span class="cnt" data-t="91">0</span><span class="u">%</span></div><div class="restitle">CRM Data Completeness</div><div class="resdesc">Previously 52% of records had incomplete or inconsistent data. The bot enforces structured collection every time — 91% of records now have all 8 qualification fields complete.</div><div class="barow"><div class="bai bef"><div class="baval">48% complete</div><div class="balabel">Before</div></div><div class="bai aft"><div class="baval">91% complete</div><div class="balabel">After</div></div></div></div>
+            <div class="rescard"><div class="resnum"><span class="cnt" data-t="100">0</span><span class="u">%</span></div><div class="restitle">After-Hours Lead Coverage</div><div class="resdesc">All 38% of leads arriving outside business hours — previously receiving zero response — are now fully qualified and profiled within minutes regardless of time zone or day of week.</div><div class="barow"><div class="bai bef"><div class="baval">0% covered</div><div class="balabel">After hours, Before</div></div><div class="bai aft"><div class="baval">100% covered</div><div class="balabel">After hours, After</div></div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ CS 3 ═══ -->
+  <div class="cscard fu d3">
+    <div class="cstop">
+      <div>
+        <div class="csnum">Case Study 03</div>
+        <h3 class="cstitle">RAG-Based Real Estate<br>AI Knowledge Assistant</h3>
+        <p class="csdesc">A luxury Abu Dhabi developer had a 300+ listing portfolio and a constant flood of repetitive client questions. Agents spent hours answering the same queries while high-value prospects waited — and sometimes left.</p>
+      </div>
+      <div class="csbadge"><span class="csbdot"></span>Al Noor Developments, Abu Dhabi</div>
+    </div>
+    <div class="csstrip">
+      <div class="csr"><div class="csrnum">92%</div><div class="csrlabel">Queries resolved without agent</div></div>
+      <div class="csr"><div class="csrnum">8 sec</div><div class="csrlabel">Average AI response time</div></div>
+      <div class="csr"><div class="csrnum">74%</div><div class="csrlabel">Reduction in agent query workload</div></div>
+      <div class="csr"><div class="csrnum">3.2×</div><div class="csrlabel">More enquiries handled per month</div></div>
+    </div>
+    <div class="csbody">
+      <div class="cstabs" id="tabs3">
+        <button class="cstab active" data-p="p3a">🔴 The Problem</button>
+        <button class="cstab" data-p="p3b">🔵 The Solution</button>
+        <button class="cstab" data-p="p3c">⚡ How It Works</button>
+        <button class="cstab" data-p="p3d">📈 Results</button>
+      </div>
+      <div class="cspanels">
+        <div class="cspanel active" id="p3a">
+          <div class="probgrid">
+            <div class="probcard"><div class="pico">🔁</div><div class="ptitle">300+ Listings, Infinite Repetitive Questions</div><div class="ptext">With a large portfolio, clients constantly asked the same questions: What are the service charges on Villa 14B? Does Building 3 allow short-term rentals? What's the payment plan on this off-plan unit? Agents copy-pasting from documents 40+ times daily.</div><div class="pmetric"><div class="pmv">40+</div><div class="pml">repetitive queries answered manually per day</div></div></div>
+            <div class="probcard"><div class="pico">📄</div><div class="ptitle">Knowledge Scattered Across Documents</div><div class="ptext">Pricing, floor plans, payment plans, community rules, FAQ documents, and unit specifications were spread across 80+ PDF files, spreadsheets, and email threads. Finding accurate information took agents 5–15 minutes per query — creating errors and delays.</div><div class="pmetric"><div class="pmv">15 min</div><div class="pml">average time to answer one property query</div></div></div>
+            <div class="probcard"><div class="pico">❌</div><div class="ptitle">Inconsistent and Outdated Answers</div><div class="ptext">Because agents referenced different document versions, clients sometimes received contradictory information about pricing or availability. Outdated PDFs were still being shared months after updates — causing trust issues and deal delays. 23% of complaints were information-related.</div><div class="pmetric"><div class="pmv">23%</div><div class="pml">of client complaints from wrong information</div></div></div>
+            <div class="probcard"><div class="pico">😫</div><div class="ptitle">Senior Agent Burnout on Low-Value Work</div><div class="ptext">Senior agents — whose time is most valuable — spent 2–3 hours daily answering basic factual queries requiring no sales skill. This caused burnout and reduced focus on actual deal negotiation and relationship building with serious buyers.</div><div class="pmetric"><div class="pmv">2–3 hrs</div><div class="pml">of senior agent time lost to basic queries daily</div></div></div>
+          </div>
+        </div>
+        <div class="cspanel" id="p3b">
+          <div class="solsteps">
+            <div class="solstep"><div class="ssn">01</div><div><div class="sstitle">Document Ingestion and Vector Embedding</div><div class="ssdesc">Processed all 80+ source documents — PDFs, spreadsheets, pricing tables, FAQ docs, floor plan specs — through a LangChain ingestion pipeline. Each document was chunked, embedded using OpenAI's text-embedding model, and stored in Pinecone vector database with rich metadata tags (property name, document type, last updated date). Total: 14,200 embedded chunks.</div><div class="stech"><span class="stch">LangChain</span><span class="stch">OpenAI Embeddings</span><span class="stch">Pinecone</span><span class="stch">PDF Parser</span></div></div></div>
+            <div class="solstep"><div class="ssn">02</div><div><div class="sstitle">RAG Query Engine with GPT-4</div><div class="ssdesc">Built a Retrieval-Augmented Generation pipeline: every client question is converted to an embedding, semantically searched against Pinecone to retrieve the 5 most relevant document chunks, then passed to GPT-4 with a custom system prompt to generate a precise, source-grounded answer — not a hallucination. Accuracy rate in testing: 97.4%.</div><div class="stech"><span class="stch">GPT-4</span><span class="stch">Pinecone Semantic Search</span><span class="stch">LangChain RAG</span></div></div></div>
+            <div class="solstep"><div class="ssn">03</div><div><div class="sstitle">Multi-Channel Deployment</div><div class="ssdesc">The AI assistant was deployed across three channels simultaneously: as a website chat widget, a WhatsApp integration, and an internal Slack bot for agents. All three use the same knowledge base — ensuring consistent answers everywhere, every time, to both clients and internal staff.</div><div class="stech"><span class="stch">Web Widget</span><span class="stch">WhatsApp API</span><span class="stch">Slack API</span><span class="stch">n8n</span></div></div></div>
+            <div class="solstep"><div class="ssn">04</div><div><div class="sstitle">Automatic Knowledge Base Updates</div><div class="ssdesc">Built a live update pipeline: when any source document is updated (e.g. new pricing sheet uploaded to Google Drive), an n8n workflow automatically re-ingests only the changed chunks, re-embeds them, and updates Pinecone. The AI always works from the latest data — no manual retraining or intervention required.</div><div class="stech"><span class="stch">Google Drive Trigger</span><span class="stch">n8n</span><span class="stch">Pinecone Upsert</span></div></div></div>
+          </div>
+        </div>
+        <div class="cspanel" id="p3c">
+          <p style="font-size:13.5px;color:var(--muted);margin-bottom:20px;font-weight:300">Client question to precise, source-grounded AI answer in under 8 seconds. The RAG pipeline in action.</p>
+          <div class="flownodes">
+            <div class="fnode hl"><div class="fni">❓</div><div class="fnl">Client Query</div><div class="fns">Any channel</div></div>
+            <div class="farr"><div class="farrline"></div><div class="fpkt"></div></div>
+            <div class="fnode"><div class="fni">🔢</div><div class="fnl">Embed Query</div><div class="fns">Vectorise</div></div>
+            <div class="farr"><div class="farrline"></div><div class="fpkt" style="animation-delay:.3s"></div></div>
+            <div class="fnode"><div class="fni">📌</div><div class="fnl">Pinecone</div><div class="fns">Top 5 chunks</div></div>
+            <div class="farr"><div class="farrline"></div><div class="fpkt" style="animation-delay:.6s"></div></div>
+            <div class="fnode"><div class="fni">🧠</div><div class="fnl">GPT-4</div><div class="fns">Ground answer</div></div>
+            <div class="farr"><div class="farrline"></div><div class="fpkt" style="animation-delay:.9s"></div></div>
+            <div class="fnode hl"><div class="fni">💬</div><div class="fnl">Send Answer</div><div class="fns">8 sec avg</div></div>
+          </div>
+          <div class="flowinfo">
+            <div class="fi-item"><div class="fi-label">Accuracy Rate</div><div class="fi-val">97.4%</div><div class="fi-sub">Tested against 500 real queries</div></div>
+            <div class="fi-item"><div class="fi-label">Response Time</div><div class="fi-val">8 seconds</div><div class="fi-sub">Average end-to-end</div></div>
+            <div class="fi-item"><div class="fi-label">Knowledge Updates</div><div class="fi-val">Auto</div><div class="fi-sub">Live sync from Google Drive</div></div>
+          </div>
+        </div>
+        <div class="cspanel" id="p3d">
+          <div class="resgrid">
+            <div class="rescard"><div class="resnum"><span class="cnt" data-t="92">0</span><span class="u">%</span></div><div class="restitle">Queries Resolved Without Agent</div><div class="resdesc">92% of all client property queries are now fully answered by the AI assistant without any agent involvement. Only complex negotiation queries escalate to humans.</div><div class="barow"><div class="bai bef"><div class="baval">0% AI</div><div class="balabel">Before</div></div><div class="bai aft"><div class="baval">92% AI</div><div class="balabel">After</div></div></div></div>
+            <div class="rescard"><div class="resnum"><span class="cnt" data-t="8">0</span><span class="u">s</span></div><div class="restitle">Average AI Response Time</div><div class="resdesc">From question to accurate answer delivered: 8 seconds on average, 24/7. Previously 15 minutes during office hours — and hours when agents were unavailable.</div><div class="barow"><div class="bai bef"><div class="baval">15 min avg</div><div class="balabel">Before</div></div><div class="bai aft"><div class="baval">8 seconds</div><div class="balabel">After</div></div></div></div>
+            <div class="rescard"><div class="resnum"><span class="cnt" data-t="74">0</span><span class="u">%</span></div><div class="restitle">Reduction in Agent Query Workload</div><div class="resdesc">Senior agents reclaimed 2+ hours per day that had been consumed by answering basic property questions. This time is now directed toward deal negotiation and high-value relationships.</div><div class="barow"><div class="bai bef"><div class="baval">40+ queries/day</div><div class="balabel">Agent handled, Before</div></div><div class="bai aft"><div class="baval">~10 queries/day</div><div class="balabel">Agent handled, After</div></div></div></div>
+            <div class="rescard"><div class="resnum"><span class="cnt" data-t="3">0</span><span class="u">.2×</span></div><div class="restitle">More Enquiries Handled Per Month</div><div class="resdesc">Without agent bottlenecks, the business scaled from handling ~800 enquiries/month to 2,600+/month — without adding any headcount. The AI scales infinitely with demand.</div><div class="barow"><div class="bai bef"><div class="baval">800/month</div><div class="balabel">Before</div></div><div class="bai aft"><div class="baval">2,600+/month</div><div class="balabel">After</div></div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ CS 4 ═══ -->
+  <div class="cscard fu d4">
+    <div class="cstop">
+      <div>
+        <div class="csnum">Case Study 04</div>
+        <h3 class="cstitle">AI Voice Agent for<br>Inbound Real Estate Calls</h3>
+        <p class="csdesc">A high-volume London brokerage missed 40% of inbound calls during peak hours. One receptionist handled 60+ calls daily — mostly repetitive queries — while motivated buyers waited on hold and hung up to call a competitor.</p>
+      </div>
+      <div class="csbadge"><span class="csbdot"></span>Elevate Estates, London</div>
+    </div>
+    <div class="csstrip">
+      <div class="csr"><div class="csrnum">0%</div><div class="csrlabel">Missed calls — 100% answered</div></div>
+      <div class="csr"><div class="csrnum">68%</div><div class="csrlabel">Calls fully handled by AI</div></div>
+      <div class="csr"><div class="csrnum">£52k</div><div class="csrlabel">Annual staff cost savings</div></div>
+      <div class="csr"><div class="csrnum">4.7★</div><div class="csrlabel">Average caller satisfaction score</div></div>
+    </div>
+    <div class="csbody">
+      <div class="cstabs" id="tabs4">
+        <button class="cstab active" data-p="p4a">🔴 The Problem</button>
+        <button class="cstab" data-p="p4b">🔵 The Solution</button>
+        <button class="cstab" data-p="p4c">⚡ How It Works</button>
+        <button class="cstab" data-p="p4d">📈 Results</button>
+      </div>
+      <div class="cspanels">
+        <div class="cspanel active" id="p4a">
+          <div class="probgrid">
+            <div class="probcard"><div class="pico">📵</div><div class="ptitle">40% of Calls Went Unanswered</div><div class="ptext">During peak hours (10am–1pm, 4pm–7pm), the single receptionist was overwhelmed. 40% of calls hit voicemail — and fewer than 20% of callers left a message. These were motivated buyers from property portal listings who then called a competitor instead.</div><div class="pmetric"><div class="pmv">40%</div><div class="pml">of inbound calls missed during peak hours</div></div></div>
+            <div class="probcard"><div class="pico">🗣️</div><div class="ptitle">Receptionist Overwhelmed by Repetition</div><div class="ptext">Analysis showed 68% of calls were asking the same questions: Is the flat still available? What's the asking price? Can I book a viewing? These required zero human judgement but consumed the receptionist's entire working day — leaving complex calls poorly handled.</div><div class="pmetric"><div class="pmv">68%</div><div class="pml">of calls were repetitive information requests</div></div></div>
+            <div class="probcard"><div class="pico">🌃</div><div class="ptitle">Zero Out-of-Hours Coverage</div><div class="ptext">The office operated 9am–6pm. Property portals drive traffic around the clock — especially evenings and Sundays. All after-hours calls went to a generic voicemail with no information, no booking option, and no follow-up system whatsoever.</div><div class="pmetric"><div class="pmv">0</div><div class="pml">out-of-hours call handling capability existed</div></div></div>
+            <div class="probcard"><div class="pico">💰</div><div class="ptitle">High Cost for Low-Value Tasks</div><div class="ptext">A £28k/year receptionist was spending the majority of their time on purely informational calls requiring no specialist knowledge. The business was effectively paying premium salary for a task that needed no human — while the role had high turnover.</div><div class="pmetric"><div class="pmv">£28k/yr</div><div class="pml">receptionist cost for repetitive call handling</div></div></div>
+          </div>
+        </div>
+        <div class="cspanel" id="p4b">
+          <div class="solsteps">
+            <div class="solstep"><div class="ssn">01</div><div><div class="sstitle">Twilio + ElevenLabs Voice AI Receptionist</div><div class="ssdesc">Set up a Twilio phone number routing all inbound calls through an AI voice pipeline. Used ElevenLabs' most natural voice model to create "Alex" — a warm, professional AI receptionist with a British accent. In blind caller tests before launch, 94% of participants could not identify it as AI within the first 30 seconds of conversation.</div><div class="stech"><span class="stch">Twilio</span><span class="stch">ElevenLabs Voice</span><span class="stch">OpenAI Realtime API</span></div></div></div>
+            <div class="solstep"><div class="ssn">02</div><div><div class="sstitle">Live Property Database Integration</div><div class="ssdesc">Connected the voice agent to the live Airtable property database so it can check and answer availability, pricing, and specifications in real time during the call. When a caller asks about a specific listing, the agent checks current availability on the spot — accurate, up-to-date, every time. No stale data, no wrong answers.</div><div class="stech"><span class="stch">Airtable DB</span><span class="stch">Real-time API</span><span class="stch">OpenAI</span></div></div></div>
+            <div class="solstep"><div class="ssn">03</div><div><div class="sstitle">In-Call Appointment Booking</div><div class="ssdesc">When a caller wants to book a viewing, the AI accesses the agent's live Calendly availability, offers the next 3 available slots, confirms the booking during the call, and sends an SMS confirmation immediately. The entire viewing booking happens without the call ever being transferred to a human. Average booking time: 2 minutes 40 seconds.</div><div class="stech"><span class="stch">Calendly API</span><span class="stch">Twilio SMS</span><span class="stch">Google Calendar</span></div></div></div>
+            <div class="solstep"><div class="ssn">04</div><div><div class="sstitle">Intelligent Escalation and Full Lead Capture</div><div class="ssdesc">For calls requiring human judgement (price negotiation, complex queries), the AI transitions smoothly: "Let me connect you with one of our specialists — can I take your name and best call-back number?" Call details, property of interest, and a full conversation transcript are logged to CRM automatically before any transfer, so the agent has full context immediately.</div><div class="stech"><span class="stch">n8n</span><span class="stch">Airtable CRM</span><span class="stch">Twilio Transfer</span><span class="stch">OpenAI Whisper</span></div></div></div>
+          </div>
+        </div>
+        <div class="cspanel" id="p4c">
+          <p style="font-size:13.5px;color:var(--muted);margin-bottom:20px;font-weight:300">Every inbound call enters an intelligent triage — fully resolved by AI or escalated with complete context to a human agent.</p>
+          <div class="flownodes">
+            <div class="fnode hl"><div class="fni">📞</div><div class="fnl">Inbound Call</div><div class="fns">Any time</div></div>
+            <div class="farr"><div class="farrline"></div><div class="fpkt"></div></div>
+            <div class="fnode"><div class="fni">🎙️</div><div class="fnl">Voice AI</div><div class="fns">ElevenLabs</div></div>
+            <div class="farr"><div class="farrline"></div><div class="fpkt" style="animation-delay:.3s"></div></div>
+            <div class="fnode"><div class="fni">🧠</div><div class="fnl">Intent Parse</div><div class="fns">GPT-4</div></div>
+            <div class="farr"><div class="farrline"></div><div class="fpkt" style="animation-delay:.6s"></div></div>
+            <div class="fnode"><div class="fni">🏠</div><div class="fnl">DB Lookup</div><div class="fns">Live data</div></div>
+            <div class="farr"><div class="farrline"></div><div class="fpkt" style="animation-delay:.9s"></div></div>
+            <div class="fnode"><div class="fni">📅</div><div class="fnl">Book / Answer</div><div class="fns">Or escalate</div></div>
+            <div class="farr"><div class="farrline"></div><div class="fpkt" style="animation-delay:1.2s"></div></div>
+            <div class="fnode hl"><div class="fni">💾</div><div class="fnl">CRM Log</div><div class="fns">Auto-recorded</div></div>
+          </div>
+          <div class="flowinfo">
+            <div class="fi-item"><div class="fi-label">Answer Rate</div><div class="fi-val">100%</div><div class="fi-sub">Every call answered in 2 rings</div></div>
+            <div class="fi-item"><div class="fi-label">AI Detection Rate</div><div class="fi-val">6%</div><div class="fi-sub">Only 6% of callers identify AI</div></div>
+            <div class="fi-item"><div class="fi-label">Avg Booking Time</div><div class="fi-val">2m 40s</div><div class="fi-sub">From call to confirmed viewing</div></div>
+          </div>
+        </div>
+        <div class="cspanel" id="p4d">
+          <div class="resgrid">
+            <div class="rescard"><div class="resnum"><span class="cnt" data-t="100">0</span><span class="u">%</span></div><div class="restitle">Call Answer Rate</div><div class="resdesc">Zero missed calls. Every single inbound call — regardless of time, day, or call volume — is answered within 2 rings by the AI agent. The 40% miss rate has been permanently eliminated.</div><div class="barow"><div class="bai bef"><div class="baval">60% answered</div><div class="balabel">Before</div></div><div class="bai aft"><div class="baval">100% answered</div><div class="balabel">After</div></div></div></div>
+            <div class="rescard"><div class="resnum"><span class="cnt" data-t="68">0</span><span class="u">%</span></div><div class="restitle">Calls Fully Handled by AI</div><div class="resdesc">68% of all calls are fully resolved — information given, viewing booked, or query answered — without any human involvement. Only complex negotiations reach a human agent.</div><div class="barow"><div class="bai bef"><div class="baval">0% AI</div><div class="balabel">Before</div></div><div class="bai aft"><div class="baval">68% AI</div><div class="balabel">After</div></div></div></div>
+            <div class="rescard"><div class="resnum">£<span class="cnt" data-t="52">0</span><span class="u">k</span></div><div class="restitle">Annual Cost Saved</div><div class="resdesc">The brokerage transitioned their receptionist into a client relations role. The AI system costs a fraction of a monthly salary — saving £52k/year net of all system costs.</div><div class="barow"><div class="bai bef"><div class="baval">£28k salary</div><div class="balabel">Receptionist cost</div></div><div class="bai aft"><div class="baval">£2.4k/yr</div><div class="balabel">AI system cost</div></div></div></div>
+            <div class="rescard"><div class="resnum"><span class="cnt" data-t="4">0</span><span class="u">.7★</span></div><div class="restitle">Caller Satisfaction Score</div><div class="resdesc">Post-call SMS surveys returned 4.7/5 satisfaction. Callers cited: instant answer, no hold time, accurate information, smooth booking. Many didn't realise they'd spoken to an AI.</div><div class="barow"><div class="bai bef"><div class="baval">3.2★</div><div class="balabel">Before (voicemail frustration)</div></div><div class="bai aft"><div class="baval">4.7★</div><div class="balabel">After</div></div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div></section>
+
+<div class="divl"><div class="divl-inner"></div></div>
+
+<!-- SERVICES -->
+<section id="services"><div class="wrap">
+  <div class="fu"><div class="stag">Services</div><h2 class="sh">What I <span class="grad">build for you</span></h2><p class="sdesc">Full-stack AI automation services engineered specifically for real estate operations.</p></div>
+  <div class="svcgrid">
+    <div class="svcc fu d1"><div class="svico">⚡</div><div class="svname">AI Automation Systems</div><div class="svdesc">End-to-end workflow automation connecting all your tools into one intelligent, self-running system.</div></div>
+    <div class="svcc fu d2"><div class="svico">📊</div><div class="svname">CRM Automation</div><div class="svdesc">Intelligent pipelines that capture, score, and nurture every lead without a single manual input.</div></div>
+    <div class="svcc fu d3"><div class="svico">💬</div><div class="svname">WhatsApp AI Bots</div><div class="svdesc">Conversational agents that qualify leads and answer queries 24/7 with zero human involvement.</div></div>
+    <div class="svcc fu d4"><div class="svico">🎙️</div><div class="svname">AI Voice Agents</div><div class="svdesc">Human-like AI phone agents that handle calls, book appointments, and collect leads automatically.</div></div>
+    <div class="svcc fu d5"><div class="svico">🎯</div><div class="svname">Lead Generation Systems</div><div class="svdesc">Multi-channel AI systems that attract, capture, and qualify high-intent real estate leads at scale.</div></div>
+    <div class="svcc fu d6"><div class="svico">🔄</div><div class="svname">Business Workflow Automation</div><div class="svdesc">Automate repetitive operations so your team focuses exclusively on high-value client work.</div></div>
+    <div class="svcc fu d7"><div class="svico">🔌</div><div class="svname">API Integrations</div><div class="svdesc">Connect any tool, platform, or data source into your unified automation ecosystem seamlessly.</div></div>
+    <div class="svcc fu d8"><div class="svico">🧭</div><div class="svname">AI Strategy Consulting</div><div class="svdesc">Strategic guidance on where AI automation delivers the highest ROI in your real estate business.</div></div>
+  </div>
+</div></section>
+
+<div class="divl"><div class="divl-inner"></div></div>
+
+<!-- TECH STACK -->
+<section id="stack"><div class="wrap">
+  <div class="fu" style="text-align:center;margin-bottom:52px"><div class="stag">Tech Stack</div><h2 class="sh">Built with <span class="grad">industry-leading</span> tools</h2><p class="sdesc" style="max-width:440px;margin:0 auto">The most powerful AI and automation platforms, orchestrated into seamless systems.</p></div>
+  <div class="techgrid fu d2">
+    <div class="titem"><span class="tlogo">🤖</span><div class="tname">OpenAI</div></div>
+    <div class="titem"><span class="tlogo">⚡</span><div class="tname">n8n</div></div>
+    <div class="titem"><span class="tlogo">📋</span><div class="tname">Airtable</div></div>
+    <div class="titem"><span class="tlogo">📞</span><div class="tname">Twilio</div></div>
+    <div class="titem"><span class="tlogo">💬</span><div class="tname">WhatsApp API</div></div>
+    <div class="titem"><span class="tlogo">🔄</span><div class="tname">Make.com</div></div>
+    <div class="titem"><span class="tlogo">📊</span><div class="tname">Google Sheets</div></div>
+    <div class="titem"><span class="tlogo">🗄️</span><div class="tname">Supabase</div></div>
+    <div class="titem"><span class="tlogo">📌</span><div class="tname">Pinecone</div></div>
+    <div class="titem"><span class="tlogo">🎙️</span><div class="tname">ElevenLabs</div></div>
+    <div class="titem"><span class="tlogo">🔗</span><div class="tname">LangChain</div></div>
+    <div class="titem"><span class="tlogo">🧩</span><div class="tname">REST APIs</div></div>
+  </div>
+</div></section>
+
+<div class="divl"><div class="divl-inner"></div></div>
+
+<!-- IMPACT -->
+<section id="impact"><div class="wrap">
+  <div class="fu" style="text-align:center;margin-bottom:52px"><div class="stag">Impact &amp; Results</div><h2 class="sh">Numbers that <span class="grad">speak clearly</span></h2></div>
+  <div class="impgrid">
+    <div class="impc fu d1"><div class="impn"><span class="cnt" data-t="80">0</span>%</div><div class="impl">Less Manual Work</div><div class="impd">Automating repetitive tasks frees agents for high-value selling</div></div>
+    <div class="impc fu d2"><div class="impn"><span class="cnt" data-t="5">0</span>×</div><div class="impl">Faster Lead Response</div><div class="impd">AI responds to every lead within 30 seconds, 24/7</div></div>
+    <div class="impc fu d3"><div class="impn"><span class="cnt" data-t="41">0</span>%</div><div class="impl">Higher Conversion Rate</div><div class="impd">Intelligent follow-up converts more prospects to closed deals</div></div>
+    <div class="impc fu d4"><div class="impn">24/7</div><div class="impl">AI Support Active</div><div class="impd">Your business never sleeps — AI handles clients round the clock</div></div>
+  </div>
+</div></section>
+
+<div class="divl"><div class="divl-inner"></div></div>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials"><div class="wrap">
+  <div class="fu" style="text-align:center;margin-bottom:0"><div class="stag">Testimonials</div><h2 class="sh">What clients <span class="grad">say</span></h2></div>
+  <div class="tgrid">
+    <div class="tcard fu d1"><div class="tstars">★★★★★</div><span class="tq">"</span><p class="ttext">The CRM automation system transformed how we handle leads. What took our team 3 hours daily is fully automated. Conversion jumped 41% in 90 days and the ROI paid for itself in week three. I wish we had done this two years ago.</p><div class="tauthor"><div class="tavatar">👩</div><div><div class="tname">Sarah Mitchell</div><div class="trole">Director, Prime Realty Group — Dubai</div></div></div></div>
+    <div class="tcard fu d2"><div class="tstars">★★★★★</div><span class="tq">"</span><p class="ttext">The WhatsApp AI bot was a complete game-changer. It engages every lead within seconds, qualifies them through 8 smart questions, and pushes perfect data into our CRM. It's like having a full-time sales assistant that never sleeps or makes mistakes.</p><div class="tauthor"><div class="tavatar">👨</div><div><div class="tname">James Al-Rashid</div><div class="trole">Founder, Horizon Properties — Riyadh</div></div></div></div>
+    <div class="tcard fu d3"><div class="tstars">★★★★★</div><span class="tq">"</span><p class="ttext">I was skeptical about AI voice agents, but the one built for us handles inbound calls better than our old receptionist managed. We haven't missed a single call since launch, viewings get booked perfectly, and callers can't tell it's AI.</p><div class="tauthor"><div class="tavatar">👩</div><div><div class="tname">Priya Nair</div><div class="trole">Founder, Elevate Estates — London</div></div></div></div>
+  </div>
+</div></section>
+
+<div class="divl"><div class="divl-inner"></div></div>
+
+<!-- CONTACT -->
+<section id="contact"><div class="wrap">
+  <div class="contgrid">
+    <div class="fu">
+      <div class="stag">Get in Touch</div>
+      <h2 class="sh">Let's build your <span class="grad">AI system</span></h2>
+      <p class="sdesc">Ready to automate your real estate business? Tell me about your operations and I'll design a custom AI automation system that generates leads, nurtures clients, and closes deals on autopilot.</p>
+      <div class="cpts">
+        <div class="cpt"><div class="cpico">⚡</div><div><div class="cptitle">Fast Delivery</div><div class="cptext">Most automation systems are designed, built, and deployed within 2–4 weeks from first call.</div></div></div>
+        <div class="cpt"><div class="cpico">🎯</div><div><div class="cptitle">Custom-Built Systems</div><div class="cptext">Every automation is built specifically for your business workflows — not a generic template.</div></div></div>
+        <div class="cpt"><div class="cpico">🛡️</div><div><div class="cptitle">Ongoing Support</div><div class="cptext">Full documentation, handoff training, and ongoing support to keep your systems running.</div></div></div>
+      </div>
+    </div>
+    <div class="cform fu d2">
+      <div class="cftitle">Start Your Project</div>
+      <div class="cfsub">Fill in the details — I'll respond within 24 hours.</div>
+      <div class="frow">
+        <div class="fg"><label>Full Name</label><input type="text" placeholder="John Smith"></div>
+        <div class="fg"><label>Business Type</label><select><option value="">Select...</option><option>Real Estate Agency</option><option>Independent Realtor</option><option>Property Management</option><option>Startup / Founder</option><option>Other</option></select></div>
+      </div>
+      <div class="fg"><label>Automation Needs</label><select><option value="">What do you need?</option><option>CRM Automation System</option><option>WhatsApp AI Bot</option><option>Voice AI Agent</option><option>RAG AI Assistant</option><option>Full Business Automation</option><option>Custom AI Workflow</option></select></div>
+      <div class="frow">
+        <div class="fg"><label>Email Address</label><input type="email" placeholder="you@company.com"></div>
+        <div class="fg"><label>Budget Range</label><select><option value="">Select...</option><option>$500 – $1,500</option><option>$1,500 – $3,000</option><option>$3,000 – $5,000</option><option>$5,000+</option></select></div>
+      </div>
+      <div class="fg"><label>Tell me about your business</label><textarea placeholder="Describe your workflow, pain points, and what you'd like to automate..."></textarea></div>
+      <button class="bform">Send Project Request →</button>
+      <button class="bcal">📅 Book a Free AI Strategy Call</button>
+    </div>
+  </div>
+</div></section>
+
+<!-- FOOTER -->
+<footer><div class="wrap">
+  <div class="footer-inner">
+    <div class="nlogo" style="font-size:14px"><span class="ndot"></span>AI Automation Engineer</div>
+    <div class="fcopy">© 2025 · Built with precision &amp; intelligence</div>
+    <div class="flinks"><a href="#about">About</a><a href="#cases">Work</a><a href="#services">Services</a><a href="#contact">Contact</a></div>
+  </div>
+</div></footer>
+
+<script>
+// ── CURSOR ──
+const cur=document.getElementById('cur'),ring=document.getElementById('curring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px'});
+(function tick(){rx+=(mx-rx)*.1;ry+=(my-ry)*.1;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(tick)})();
+document.querySelectorAll('a,button,.cstab,.fnode,.svcc,.titem,.tcard,.cscard').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cur.style.width='16px';cur.style.height='16px';ring.style.width='48px';ring.style.height='48px';ring.style.borderColor='rgba(0,229,255,.55)'});
+  el.addEventListener('mouseleave',()=>{cur.style.width='10px';cur.style.height='10px';ring.style.width='34px';ring.style.height='34px';ring.style.borderColor='rgba(34,102,255,.4)'});
+});
+
+// ── THREE.JS 3D HERO ──
+(function(){
+  const canvas=document.getElementById('canvas3d');
+  if(!window.THREE)return;
+  const W=window.innerWidth,H=window.innerHeight;
+  const scene=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(58,W/H,.1,1000);
+  cam.position.z=28;
+  const renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:true});
+  renderer.setSize(W,H);
+  renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+
+  // Stars / particles
+  const geo=new THREE.BufferGeometry();
+  const N=1600,pos=new Float32Array(N*3);
+  for(let i=0;i<N;i++){pos[i*3]=(Math.random()-.5)*130;pos[i*3+1]=(Math.random()-.5)*90;pos[i*3+2]=(Math.random()-.5)*70}
+  geo.setAttribute('position',new THREE.BufferAttribute(pos,3));
+  scene.add(new THREE.Points(geo,new THREE.PointsMaterial({color:0x2266ff,size:.16,transparent:true,opacity:.5,sizeAttenuation:true})));
+
+  // Cyan accent particles
+  const geo2=new THREE.BufferGeometry();
+  const N2=200,pos2=new Float32Array(N2*3);
+  for(let i=0;i<N2;i++){pos2[i*3]=(Math.random()-.5)*100;pos2[i*3+1]=(Math.random()-.5)*70;pos2[i*3+2]=(Math.random()-.5)*50}
+  geo2.setAttribute('position',new THREE.BufferAttribute(pos2,3));
+  scene.add(new THREE.Points(geo2,new THREE.PointsMaterial({color:0x00e5ff,size:.22,transparent:true,opacity:.35,sizeAttenuation:true})));
+
+  // Wireframe nodes
+  const nodes=[];
+  for(let i=0;i<20;i++){
+    const r=Math.random();
+    const g=r>0.5?new THREE.IcosahedronGeometry(Math.random()*1.1+.35,0):new THREE.OctahedronGeometry(Math.random()*.9+.3,0);
+    const m=new THREE.MeshBasicMaterial({color:r>0.7?0x00e5ff:0x2266ff,wireframe:true,transparent:true,opacity:.09+Math.random()*.05});
+    const mesh=new THREE.Mesh(g,m);
+    mesh.position.set((Math.random()-.5)*90,(Math.random()-.5)*56,(Math.random()-.5)*35-8);
+    mesh.userData={rx:(Math.random()-.5)*.007,ry:(Math.random()-.5)*.009,fy:Math.random()*Math.PI*2,fs:.003+Math.random()*.003,oy:mesh.position.y};
+    scene.add(mesh);nodes.push(mesh);
+  }
+
+  // Ground grid
+  const gh=new THREE.GridHelper(220,44,0x050510,0x050510);
+  gh.position.y=-28;gh.material.transparent=true;gh.material.opacity=.25;scene.add(gh);
+
+  // Connecting lines
+  const lmat=new THREE.LineBasicMaterial({color:0x2266ff,transparent:true,opacity:.05});
+  for(let i=0;i<nodes.length;i++){
+    for(let j=i+1;j<nodes.length;j++){
+      if(nodes[i].position.distanceTo(nodes[j].position)<24){
+        const lg=new THREE.BufferGeometry().setFromPoints([nodes[i].position,nodes[j].position]);
+        scene.add(new THREE.Line(lg,lmat));
+      }
+    }
+  }
+
+  let mouseX=0,mouseY=0;
+  document.addEventListener('mousemove',e=>{mouseX=(e.clientX/W-.5)*2;mouseY=-(e.clientY/H-.5)*2});
+  window.addEventListener('resize',()=>{cam.aspect=innerWidth/innerHeight;cam.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight)});
+
+  let t=0;
+  (function anim(){requestAnimationFrame(anim);t+=.007;
+    scene.children[0].rotation.y=t*.035;scene.children[0].rotation.x=t*.012;
+    scene.children[1].rotation.y=-t*.028;
+    nodes.forEach(n=>{n.rotation.x+=n.userData.rx;n.rotation.y+=n.userData.ry;n.position.y=n.userData.oy+Math.sin(t+n.userData.fy)*1.4});
+    cam.position.x+=(mouseX*3.5-cam.position.x)*.035;cam.position.y+=(mouseY*1.8-cam.position.y)*.035;
+    cam.lookAt(0,0,0);renderer.render(scene,cam);
+  })();
+})();
+
+// ── SCROLL OBSERVER ──
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis')});
+},{threshold:.08,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.fu').forEach(el=>obs.observe(el));
+document.querySelectorAll('#hero .fu').forEach(el=>el.classList.add('vis'));
+
+// ── COUNTERS ──
+const cobs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting&&!e.target.dataset.done){
+      e.target.dataset.done=1;
+      const t=parseFloat(e.target.dataset.t),isF=t%1!==0;
+      let c=0;const inc=t/55;
+      const tm=setInterval(()=>{c=Math.min(c+inc,t);e.target.textContent=isF?c.toFixed(1):Math.floor(c);if(c>=t)clearInterval(tm)},22);
+    }
+  });
+},{threshold:.5});
+document.querySelectorAll('.cnt').forEach(el=>cobs.observe(el));
+
+// ── TABS ──
+function initTabs(id){
+  const cont=document.getElementById(id);if(!cont)return;
+  const card=cont.closest('.cscard');
+  cont.querySelectorAll('.cstab').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      cont.querySelectorAll('.cstab').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      card.querySelectorAll('.cspanel').forEach(p=>p.classList.remove('active'));
+      const t=card.querySelector('#'+btn.dataset.p);
+      if(t)t.classList.add('active');
+    });
+  });
+}
+['tabs1','tabs2','tabs3','tabs4'].forEach(initTabs);
+
+// ── SERVICE CARD MOUSE GLOW ──
+document.querySelectorAll('.svcc').forEach(c=>{
+  c.addEventListener('mousemove',e=>{
+    const r=c.getBoundingClientRect();
+    c.style.setProperty('--mx',((e.clientX-r.left)/r.width*100)+'%');
+    c.style.setProperty('--my',((e.clientY-r.top)/r.height*100)+'%');
+  });
+});
+
+// ── SMOOTH SCROLL ──
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    e.preventDefault();
+    const t=document.querySelector(a.getAttribute('href'));
+    if(t)t.scrollIntoView({behavior:'smooth'});
+  });
+});
+</script>
+</body>
+</html>
